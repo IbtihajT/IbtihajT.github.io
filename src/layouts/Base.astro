@@ -1,0 +1,48 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Muhammad Ibtihaj Tahir — Data Scientist & AI Engineer",
+  description = "Muhammad Ibtihaj Tahir — Data Scientist and AI Engineer. Building end-to-end ML systems, MLOps pipelines, and intelligent solutions that turn data into decisions.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Muhammad Ibtihaj Tahir" />
+    <meta
+      name="keywords"
+      content="Data Scientist, AI Engineer, ML Engineer, Machine Learning, MLOps, Deep Learning, PyTorch, TensorFlow"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/images/MyStack/Logo.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <!-- Google Fonts (variable) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

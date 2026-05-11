@@ -1,0 +1,32 @@
+{
+  "name": "ibtihajt-portfolio",
+  "type": "module",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Personal portfolio of Muhammad Ibtihaj Tahir — ML Engineer",
+  "homepage": "https://ibtihajt.github.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IbtihajT/IbtihajT.github.io.git"
+  },
+  "author": "Muhammad Ibtihaj Tahir <ibtihajtahir01@gmail.com>",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.3.1",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^6.0.3"
+  }
+}

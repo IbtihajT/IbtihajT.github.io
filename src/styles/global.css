@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS
+   Tailwind v4 @theme — exposed as both CSS variables AND
+   generated Tailwind utilities (bg-primary, text-accent, etc.)
+   ============================================================ */
+@theme {
+  /* Brand */
+  --color-primary:        #7c3aed;
+  --color-primary-dim:    rgba(124, 58, 237, 0.12);
+  --color-primary-border: rgba(124, 58, 237, 0.35);
+  --color-primary-glow:   rgba(124, 58, 237, 0.25);
+
+  --color-accent:         #22d3ee;
+  --color-accent-dim:     rgba(34, 211, 238, 0.10);
+  --color-accent-border:  rgba(34, 211, 238, 0.28);
+
+  /* Backgrounds */
+  --color-bg:   #06060f;
+  --color-bg-1: #0c0c1e;
+  --color-bg-2: #12122a;
+  --color-bg-3: #181834;
+
+  /* Surfaces */
+  --color-glass:       rgba(255, 255, 255, 0.03);
+  --color-glass-hover: rgba(255, 255, 255, 0.06);
+  --color-edge:        rgba(255, 255, 255, 0.07);
+  --color-edge-hi:     rgba(124, 58, 237, 0.40);
+
+  /* Text */
+  --color-text:       #eeeeff;
+  --color-text-muted: #8888aa;
+  --color-text-dim:   #4a4a66;
+
+  /* Fonts */
+  --font-display: "Outfit", Helvetica, Arial, sans-serif;
+  --font-body:    "Inter", Helvetica, Arial, sans-serif;
+  --font-mono:    "JetBrains Mono", "Courier New", monospace;
+
+  /* Radii — override Tailwind defaults to match the brand */
+  --radius-sm:  8px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+  --radius-2xl: 36px;
+
+  /* Easings */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   BASE LAYER
+   Global resets / element defaults. Component-level styles
+   live in scoped <style> blocks per .astro component.
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--color-text);
+    line-height: 1.2;
+  }
+
+  p {
+    color: var(--color-text-muted);
+    line-height: 1.78;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.35s var(--ease-default);
+  }
+}
+
+/* ============================================================
+   SHARED UTILITIES
+   Brand-specific helpers used across multiple components.
+   ============================================================ */
+.text-gradient {
+  background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
