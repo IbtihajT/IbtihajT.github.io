@@ -1,0 +1,289 @@
+---
+import { Icon } from "astro-icon/components";
+import SectionLabel from "./SectionLabel.astro";
+
+type Service = {
+  icon: string;
+  name: string;
+  description: string;
+  bullets: string[];
+  /** Apply the subtle violet wash + always-on shimmer. */
+  featured?: boolean;
+};
+
+const services: Service[] = [
+  {
+    icon: "lucide:database",
+    name: "Data Engineering",
+    description:
+      "Building robust data pipelines, ETL workflows, and analytics infrastructure that deliver clean, reliable data at scale.",
+    bullets: [
+      "Data pipeline design",
+      "Feature engineering",
+      "Data quality & validation",
+    ],
+  },
+  {
+    icon: "lucide:cpu",
+    name: "ML / AI Development",
+    description:
+      "Designing, training, and deploying machine learning and deep learning models that solve real business problems end-to-end.",
+    bullets: [
+      "Model architecture design",
+      "Training & fine-tuning",
+      "Evaluation & model selection",
+    ],
+    featured: true,
+  },
+  {
+    icon: "lucide:cog",
+    name: "MLOps & Deployment",
+    description:
+      "End-to-end MLOps pipelines — automated deployment, real-time monitoring, retraining triggers, and production model maintenance.",
+    bullets: [
+      "CI/CD for ML pipelines",
+      "Model monitoring & alerts",
+      "Production inference APIs",
+    ],
+  },
+];
+---
+
+<section id="services" class="services-section">
+  <div class="services-container">
+
+    <header class="section-header">
+      <SectionLabel text="03 / Services" />
+      <h2 class="section-heading">
+        What I <span class="text-gradient">Offer</span>
+      </h2>
+      <p class="section-sub">
+        Full-spectrum AI and data science capabilities, from raw data to production.
+      </p>
+    </header>
+
+    <ul class="services-grid">
+      {services.map((s) => (
+        <li class:list={["service-glass", s.featured && "featured"]}>
+          <div class="service-icon-wrap">
+            <Icon name={s.icon} class="service-icon" aria-hidden="true" />
+          </div>
+
+          <h3 class="service-name">{s.name}</h3>
+          <p class="service-desc">{s.description}</p>
+
+          <ul class="service-list">
+            {s.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .services-section {
+    background: var(--color-bg);
+    padding: 110px 0;
+  }
+
+  .services-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .services-container { padding: 0 2.5rem; }
+  }
+
+  /* ---------- Section header ---------- */
+  .section-header {
+    margin-bottom: 64px;
+    max-width: 720px;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.5vw, 62px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0 0 16px;
+  }
+
+  .section-sub {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  /* ---------- Grid ---------- */
+  .services-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 768px) {
+    .services-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ---------- Glass card ---------- */
+  .service-glass {
+    position: relative;
+    background: var(--color-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--color-edge);
+    border-radius: var(--radius-xl);
+    padding: 44px 36px 48px;
+    overflow: hidden;
+    transition: border-color 0.4s var(--ease-default),
+                box-shadow 0.4s var(--ease-default),
+                background 0.4s var(--ease-default);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Top shimmer line */
+  .service-glass::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(124, 58, 237, 0.6),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-default),
+                left 0.4s var(--ease-default),
+                right 0.4s var(--ease-default);
+  }
+
+  .service-glass:hover::before {
+    opacity: 1;
+    left: 10%;
+    right: 10%;
+  }
+
+  .service-glass.featured {
+    background: rgba(124, 58, 237, 0.06);
+    border-color: var(--color-primary-border);
+  }
+
+  .service-glass.featured::before {
+    opacity: 0.7;
+  }
+
+  /* No-lift hover — centered glow, per design feedback. */
+  .service-glass:hover {
+    border-color: var(--color-primary-border);
+    box-shadow:
+      0 0 0 1px rgba(124, 58, 237, 0.18),
+      0 0 70px rgba(124, 58, 237, 0.14);
+  }
+
+  /* ---------- Icon ---------- */
+  .service-icon-wrap {
+    width: 58px;
+    height: 58px;
+    background: var(--color-primary-dim);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    transition: background 0.35s var(--ease-default),
+                box-shadow 0.35s var(--ease-default),
+                transform 0.35s var(--ease-default);
+  }
+
+  .service-glass:hover .service-icon-wrap {
+    background: rgba(124, 58, 237, 0.2);
+    box-shadow: 0 0 28px var(--color-primary-glow);
+    transform: scale(1.06);
+  }
+
+  .service-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary);
+  }
+
+  /* ---------- Text ---------- */
+  .service-name {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    margin: 0 0 14px;
+  }
+
+  .service-desc {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--color-text-muted);
+    line-height: 1.78;
+    margin: 0 0 28px;
+  }
+
+  /* ---------- Bullet list ---------- */
+  .service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .service-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--color-text-dim);
+    padding: 9px 0;
+    border-bottom: 1px solid var(--color-edge);
+    letter-spacing: 0.02em;
+    transition: color 0.25s var(--ease-default);
+  }
+
+  .service-list li::before {
+    content: "→";
+    color: var(--color-primary);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .service-list li:last-child {
+    border-bottom: none;
+  }
+
+  .service-glass:hover .service-list li {
+    color: var(--color-text-muted);
+  }
+
+  /* ---------- Mobile (≤767px) ---------- */
+  @media (max-width: 767px) {
+    .services-section { padding: 80px 0; }
+    .section-header { margin-bottom: 40px; }
+    .section-heading { font-size: clamp(30px, 8vw, 50px); }
+    .service-glass { padding: 32px 24px 36px; }
+  }
+</style>

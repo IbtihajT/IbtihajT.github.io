@@ -1,0 +1,324 @@
+---
+import { Icon } from "astro-icon/components";
+import SectionLabel from "./SectionLabel.astro";
+
+type Project = {
+  title: string;
+  image: string;
+  imageAlt: string;
+  tags: string[];
+  description: string;
+  link: { href: string; label: string };
+  /** Spans 2 columns on desktop. */
+  featured?: boolean;
+};
+
+const projects: Project[] = [
+  {
+    title: "Singing Emotion Prediction Using Machine Learning",
+    image: "/images/Project/Project.webp",
+    imageAlt: "Singing Emotion Prediction",
+    tags: ["Machine Learning", "Audio Processing", "Python"],
+    description:
+      "Developed an end-to-end ML pipeline to classify emotional states from vocal performance data using audio feature extraction, signal processing, and ensemble classifiers with cross-validated evaluation.",
+    link: {
+      href: "https://www.linkedin.com/in/muhammad-ibtihaj-tahir/overlay/1635553835856/single-media-viewer/?profileId=ACoAABKM1coBO-ZtOTnhBipURSmlSPz1TAoCdcM",
+      label: "View Project",
+    },
+    featured: true,
+  },
+  {
+    title: "Visualization-Based Malware Analysis via CNN",
+    image: "/images/Project/Project2.webp",
+    imageAlt: "Malware Analysis CNN",
+    tags: ["CNN", "Computer Vision", "Security"],
+    description:
+      "Applied convolutional neural networks to binary visualizations of malware samples, achieving high-accuracy classification across malware families.",
+    link: {
+      href: "https://github.com/IbtihajT/Malware_Analysis_Through_Visualization_of_The_Convolutional_Neural_Network",
+      label: "GitHub",
+    },
+  },
+  {
+    title: "MNIST Dataset Visualization & Analysis",
+    image: "/images/Project/Project3.webp",
+    imageAlt: "MNIST Visualization",
+    tags: ["Deep Learning", "Visualization", "TensorFlow"],
+    description:
+      "Comprehensive visualization study exploring feature distributions, latent space representations, and model interpretation techniques on the MNIST benchmark dataset.",
+    link: {
+      href: "https://www.linkedin.com/in/muhammad-ibtihaj-tahir/overlay/1590177887175/single-media-viewer?profileId=ACoAABKM1coBO-ZtOTnhBipURSmlSPz1TAoCdcM",
+      label: "View Project",
+    },
+  },
+];
+---
+
+<section id="projects" class="projects-section">
+  <div class="projects-container">
+
+    <header class="section-header">
+      <SectionLabel text="02 / Projects" />
+      <h2 class="section-heading">
+        Selected <span class="text-gradient">Work</span>
+      </h2>
+      <p class="section-sub">
+        Real-world problems solved with machine learning and AI.
+      </p>
+    </header>
+
+    <ul class="bento-grid">
+      {projects.map((p) => (
+        <li class:list={["bento-card", p.featured && "bento-lg"]}>
+          <div class="project-img-wrap">
+            <img
+              src={p.image}
+              alt={p.imageAlt}
+              class="project-img"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="project-overlay" aria-hidden="true"></div>
+          </div>
+
+          <div class="project-content">
+            <ul class="project-tags">
+              {p.tags.map((t) => <li class="p-tag">{t}</li>)}
+            </ul>
+
+            <h3 class="project-title">{p.title}</h3>
+            <p class="project-desc">{p.description}</p>
+
+            <a
+              href={p.link.href}
+              class="project-link"
+              {...p.link.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {}}
+            >
+              {p.link.label}
+              <Icon name="lucide:arrow-right" class="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    background: var(--color-bg-1);
+    padding: 110px 0;
+  }
+
+  .projects-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .projects-container { padding: 0 2.5rem; }
+  }
+
+  /* ---------- Section header ---------- */
+  .section-header {
+    margin-bottom: 64px;
+    max-width: 720px;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.5vw, 62px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0 0 16px;
+  }
+
+  .section-sub {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  /* ---------- Bento grid ---------- */
+  .bento-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 768px) {
+    .bento-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  }
+  @media (min-width: 1024px) {
+    .bento-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .bento-lg {
+    grid-column: span 1;
+  }
+  @media (min-width: 768px) {
+    .bento-lg { grid-column: span 2; }
+  }
+
+  /* ---------- Card ---------- */
+  .bento-card {
+    position: relative;
+    background: var(--color-glass);
+    border: 1px solid var(--color-edge);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: all 0.4s var(--ease-default);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bento-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-default);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .bento-card:hover {
+    border-color: var(--color-primary-border);
+    box-shadow:
+      0 0 0 1px rgba(124, 58, 237, 0.18),
+      0 0 60px rgba(124, 58, 237, 0.12);
+  }
+
+  .bento-card:hover::before {
+    opacity: 1;
+  }
+
+  /* ---------- Image area ---------- */
+  .project-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 210px;
+    flex-shrink: 0;
+  }
+
+  .bento-lg .project-img-wrap {
+    height: 270px;
+  }
+
+  .project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s var(--ease-default);
+  }
+
+  .bento-card:hover .project-img {
+    transform: scale(1.06);
+  }
+
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(6, 6, 15, 0.97) 0%,
+      rgba(6, 6, 15, 0.40) 55%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  /* ---------- Content area ---------- */
+  .project-content {
+    padding: 26px 28px 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+  }
+
+  .project-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .p-tag {
+    padding: 4px 11px;
+    background: var(--color-primary-dim);
+    border: 1px solid var(--color-primary-border);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #c4b5fd;
+  }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: clamp(15px, 1.4vw, 19px);
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.38;
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+  }
+
+  .project-desc {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--color-text-muted);
+    line-height: 1.68;
+    margin: 0 0 20px;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: 0.02em;
+    transition: gap 0.25s var(--ease-default);
+    align-self: flex-start;
+  }
+
+  .project-link:hover {
+    gap: 13px;
+    color: var(--color-accent);
+  }
+
+  /* ---------- Mobile (≤767px) ---------- */
+  @media (max-width: 767px) {
+    .projects-section { padding: 80px 0; }
+    .section-header { margin-bottom: 40px; }
+    .section-heading { font-size: clamp(30px, 8vw, 50px); }
+    .project-content { padding: 20px 22px 26px; }
+  }
+</style>

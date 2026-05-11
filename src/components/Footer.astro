@@ -1,0 +1,143 @@
+---
+import { Icon } from "astro-icon/components";
+
+const year = new Date().getFullYear();
+
+type Social = { name: string; icon: string; href: string };
+const socials: Social[] = [
+  { name: "GitHub",   icon: "simple-icons:github",   href: "https://github.com/IbtihajT" },
+  { name: "LinkedIn", icon: "simple-icons:linkedin", href: "https://www.linkedin.com/in/muhammad-ibtihaj-tahir" },
+  { name: "Email",    icon: "lucide:mail",           href: "mailto:ibtihajtahir01@gmail.com" },
+];
+---
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-inner">
+
+      <a href="#home" class="footer-logo" aria-label="Back to top">
+        <img
+          src="/images/MyStack/Logo.svg"
+          alt="Ibtihaj Tahir"
+          width="70"
+          height="auto"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+
+      <span class="footer-copy">
+        &copy; {year} Ibtihaj Tahir. All rights reserved.
+      </span>
+
+      <ul class="footer-socials">
+        {socials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              aria-label={s.name}
+              {...s.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {}}
+            >
+              <Icon name={s.icon} class="footer-social-icon" aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-edge);
+    padding: 36px 0;
+    margin: 0;
+  }
+
+  .footer-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .footer-container { padding: 0 2.5rem; }
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  /* ---------- Logo ---------- */
+  .footer-logo img {
+    opacity: 0.7;
+    transition: opacity 0.25s var(--ease-default);
+    display: block;
+  }
+
+  .footer-logo:hover img {
+    opacity: 1;
+  }
+
+  /* ---------- Copy line ---------- */
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- Social row ---------- */
+  .footer-socials {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .footer-socials a {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-edge);
+    border-radius: 50%;
+    color: var(--color-text-muted);
+    background: transparent;
+    transition: border-color 0.25s var(--ease-default),
+                color 0.25s var(--ease-default),
+                background 0.25s var(--ease-default),
+                box-shadow 0.25s var(--ease-default);
+  }
+
+  /* No-lift hover — centered glow, per design feedback. */
+  .footer-socials a:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-dim);
+    box-shadow: 0 0 18px var(--color-primary-glow);
+  }
+
+  .footer-social-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ---------- Mobile (≤767px) ---------- */
+  @media (max-width: 767px) {
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+      gap: 18px;
+    }
+  }
+</style>

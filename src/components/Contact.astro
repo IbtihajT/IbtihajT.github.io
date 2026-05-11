@@ -1,0 +1,208 @@
+---
+import { Icon } from "astro-icon/components";
+import SectionLabel from "./SectionLabel.astro";
+
+const email = "ibtihajtahir01@gmail.com";
+
+type Social = { name: string; icon: string; href: string };
+const socials: Social[] = [
+  { name: "GitHub",   icon: "simple-icons:github",   href: "https://github.com/IbtihajT" },
+  { name: "LinkedIn", icon: "simple-icons:linkedin", href: "https://www.linkedin.com/in/muhammad-ibtihaj-tahir" },
+];
+---
+
+<section id="contact" class="contact-section">
+  <div class="contact-container">
+    <div class="contact-inner">
+
+      <div class="label-wrap">
+        <SectionLabel text="05 / Contact" />
+      </div>
+
+      <h2 class="contact-heading">
+        Let's Build Something<br />
+        <span class="text-gradient">Intelligent Together</span>
+      </h2>
+
+      <p class="contact-sub">
+        Have a project in mind? Open to freelance work, consulting engagements,
+        and full-time opportunities. Let's talk.
+      </p>
+
+      <div class="contact-actions">
+        <a href={`mailto:${email}`} class="btn-contact-primary">
+          <Icon name="lucide:mail" class="cta-icon" aria-hidden="true" />
+          {email}
+        </a>
+
+        <span class="contact-divider">or connect on</span>
+
+        <ul class="contact-socials">
+          {socials.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-social-link"
+                aria-label={s.name}
+              >
+                <Icon name={s.icon} class="social-icon" aria-hidden="true" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    background: var(--color-bg);
+    padding: 110px 0;
+  }
+
+  .contact-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .contact-container { padding: 0 2.5rem; }
+  }
+
+  .contact-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .label-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ---------- Heading + sub ---------- */
+  .contact-heading {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 5.5vw, 80px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: var(--color-text);
+    margin: 0 0 24px;
+  }
+
+  .contact-sub {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: var(--color-text-muted);
+    line-height: 1.72;
+    max-width: 500px;
+    margin: 0 auto 52px;
+  }
+
+  /* ---------- Actions ---------- */
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  /* ---------- Primary email CTA ---------- */
+  .btn-contact-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 40px;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background 0.3s var(--ease-default),
+                box-shadow 0.3s var(--ease-default);
+  }
+
+  /* No-lift hover — centered glow, per design feedback. */
+  .btn-contact-primary:hover {
+    background: #6d28d9;
+    color: #fff;
+    box-shadow:
+      0 0 0 1px rgba(124, 58, 237, 0.4),
+      0 0 48px var(--color-primary-glow);
+  }
+
+  .cta-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Divider ---------- */
+  .contact-divider {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+  }
+
+  /* ---------- Social row ---------- */
+  .contact-socials {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 12px;
+  }
+
+  .contact-social-link {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-edge);
+    border-radius: 50%;
+    color: var(--color-text-muted);
+    background: transparent;
+    transition: border-color 0.26s var(--ease-default),
+                color 0.26s var(--ease-default),
+                background 0.26s var(--ease-default),
+                box-shadow 0.26s var(--ease-default);
+  }
+
+  /* No-lift hover — centered glow, per design feedback. */
+  .contact-social-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-dim);
+    box-shadow:
+      0 0 0 1px rgba(124, 58, 237, 0.25),
+      0 0 24px var(--color-primary-glow);
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ---------- Mobile (≤767px) ---------- */
+  @media (max-width: 767px) {
+    .contact-section { padding: 80px 0; }
+    .contact-heading { font-size: clamp(32px, 9vw, 56px); }
+    .contact-sub { margin-bottom: 36px; font-size: 15.5px; }
+    .btn-contact-primary {
+      padding: 16px 28px;
+      font-size: 14.5px;
+      max-width: 100%;
+      word-break: break-all;
+    }
+  }
+</style>

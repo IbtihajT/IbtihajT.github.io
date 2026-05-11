@@ -1,19 +1,26 @@
 ---
 import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Projects from "../components/Projects.astro";
+import Services from "../components/Services.astro";
+import Stack from "../components/Stack.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Base>
-  <main class="min-h-screen flex items-center justify-center p-8">
-    <div class="text-center">
-      <p class="font-mono text-xs tracking-[0.2em] uppercase text-primary mb-4">
-        Astro 6 · Tailwind v4 · scaffold ready
-      </p>
-      <h1 class="font-display font-black text-5xl md:text-7xl tracking-tight mb-6 text-gradient">
-        Muhammad Ibtihaj Tahir
-      </h1>
-      <p class="text-text-muted max-w-md mx-auto">
-        Sections will be ported here next. The Astro 6 + Tailwind v4 scaffold is live and the design tokens are wired up.
-      </p>
-    </div>
+  <Nav />
+
+  <main>
+    <Hero />
+    <About />
+    <Projects />
+    <Services />
+    <Stack />
+    <Contact />
   </main>
+
+  <Footer />
 </Base>

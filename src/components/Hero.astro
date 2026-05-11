@@ -1,0 +1,407 @@
+---
+import { Icon } from "astro-icon/components";
+
+const socials = [
+  { label: "GitHub",   href: "https://github.com/IbtihajT",                            icon: "simple-icons:github"   },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammad-ibtihaj-tahir",     icon: "simple-icons:linkedin" },
+  { label: "Email",    href: "mailto:ibtihajtahir01@gmail.com",                        icon: "lucide:mail"           },
+];
+---
+
+<section id="home" class="hero">
+  <div class="hero-bg-mesh" aria-hidden="true"></div>
+  <div class="hero-grid-overlay" aria-hidden="true"></div>
+
+  <div class="hero-container">
+
+    <div class="hero-badge anim" style="--anim-delay: 0.1s">
+      <span class="badge-dot" aria-hidden="true"></span>
+      Available for Freelance &amp; Consulting
+    </div>
+
+    <h1 class="hero-name anim" style="--anim-delay: 0.25s">
+      Muhammad Ibtihaj<br />Tahir
+    </h1>
+
+    <div
+      class="hero-roles anim"
+      style="--anim-delay: 0.4s"
+      aria-label="Data Scientist, AI Engineer, ML Engineer"
+    >
+      <span class="role-dash" aria-hidden="true">—</span>
+      <span class="role-cycle" aria-hidden="true"></span>
+    </div>
+
+    <p class="hero-tagline anim" style="--anim-delay: 0.55s">
+      Building intelligent systems that turn<br />
+      raw data into decisions that matter.
+    </p>
+
+    <div class="hero-actions anim" style="--anim-delay: 0.65s">
+      <a href="#projects" class="btn-hero-primary">View Projects</a>
+      <a href="#contact" class="btn-hero-secondary">Get in Touch</a>
+    </div>
+
+    <div class="hero-socials anim" style="--anim-delay: 0.8s">
+      {socials.map((s) => (
+        <a
+          href={s.href}
+          aria-label={s.label}
+          {...s.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+        >
+          <Icon name={s.icon} class="h-4 w-4" />
+        </a>
+      ))}
+    </div>
+
+  </div>
+
+  <a href="#about" class="hero-scroll anim" style="--anim-delay: 1s" aria-label="Scroll to About">
+    <span class="scroll-line" aria-hidden="true"></span>
+    <span class="scroll-text">Scroll</span>
+  </a>
+</section>
+
+<style>
+  /* ---------- Frame ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 110px 1.5rem 90px;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-container {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+  }
+
+  /* ---------- Animated orb background ---------- */
+  .hero-bg-mesh {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-bg-mesh::before,
+  .hero-bg-mesh::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .hero-bg-mesh::before {
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.22) 0%, transparent 70%);
+    top: -250px;
+    left: -200px;
+    animation: orb-a 22s ease-in-out infinite;
+  }
+
+  .hero-bg-mesh::after {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.12) 0%, transparent 70%);
+    bottom: -150px;
+    right: -100px;
+    animation: orb-b 28s ease-in-out infinite;
+  }
+
+  @keyframes orb-a {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(70px, 50px) scale(1.12); }
+    66%      { transform: translate(-40px, 80px) scale(0.92); }
+  }
+
+  @keyframes orb-b {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    40%      { transform: translate(-60px, -50px) scale(1.08); }
+    70%      { transform: translate(50px, -30px) scale(0.96); }
+  }
+
+  /* ---------- Dot-grid overlay ---------- */
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+    -webkit-mask-image: radial-gradient(ellipse 75% 75% at 40% 50%, black 30%, transparent 100%);
+    mask-image: radial-gradient(ellipse 75% 75% at 40% 50%, black 30%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ---------- Entrance animation (page-load stagger) ---------- */
+  .anim {
+    opacity: 0;
+    animation: rise-in 0.7s var(--ease-default) forwards;
+    animation-delay: var(--anim-delay, 0s);
+  }
+
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- Availability badge ---------- */
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 18px 7px 12px;
+    background: var(--color-accent-dim);
+    border: 1px solid var(--color-accent-border);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--color-accent);
+    margin-bottom: 36px;
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    flex-shrink: 0;
+    animation: dot-pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes dot-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5); }
+    50%      { box-shadow: 0 0 0 7px rgba(34, 211, 238, 0); }
+  }
+
+  /* ---------- Giant name ----------
+     Note: sized for "Muhammad Ibtihaj / Tahir" (longer first line).
+     Iteration backlog at docs/future-features.md → D1.
+  */
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 8.5vw, 128px);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: var(--color-text);
+    margin: 0 0 40px;
+  }
+
+  /* ---------- Rotating role ---------- */
+  .hero-roles {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: clamp(15px, 1.8vw, 22px);
+    color: var(--color-text-muted);
+    margin-bottom: 28px;
+  }
+
+  .role-dash {
+    color: var(--color-primary);
+    font-size: 1.1em;
+    font-weight: 300;
+  }
+
+  .role-cycle {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  /*
+    `content` is a discrete CSS property: it doesn't interpolate, so the
+    value at each keyframe holds until the next. 3s per role over a 9s loop.
+  */
+  .role-cycle::after {
+    content: "Data Scientist";
+    animation: cycle-roles 9s infinite;
+  }
+
+  @keyframes cycle-roles {
+    0%   { content: "Data Scientist"; }
+    33%  { content: "AI Engineer"; }
+    66%  { content: "ML Engineer"; }
+    100% { content: "Data Scientist"; }
+  }
+
+  /* ---------- Tagline ---------- */
+  .hero-tagline {
+    font-size: clamp(16px, 1.8vw, 20px);
+    color: var(--color-text-muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin: 0 0 48px;
+  }
+
+  /* ---------- CTA buttons ---------- */
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 34px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    letter-spacing: 0.01em;
+    transition: all 0.3s var(--ease-default);
+  }
+
+  .btn-hero-primary {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .btn-hero-primary:hover {
+    background: #6d28d9;
+    color: #fff;
+    box-shadow: 0 0 36px var(--color-primary-glow);
+  }
+
+  .btn-hero-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-edge-hi);
+  }
+
+  .btn-hero-secondary:hover {
+    background: var(--color-primary-dim);
+    border-color: var(--color-primary);
+    color: var(--color-text);
+  }
+
+  /* ---------- Social icons ---------- */
+  .hero-socials {
+    display: flex;
+    gap: 12px;
+  }
+
+  .hero-socials a {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-edge);
+    border-radius: 50%;
+    color: var(--color-text-muted);
+    font-size: 16px;
+    transition: all 0.26s var(--ease-default);
+  }
+
+  .hero-socials a:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-dim);
+  }
+
+  /* ---------- Scroll cue ---------- */
+  .hero-scroll {
+    position: absolute;
+    bottom: 44px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-text-dim);
+    z-index: 2;
+    transition: color 0.25s;
+  }
+
+  .hero-scroll:hover {
+    color: var(--color-text-muted);
+  }
+
+  .scroll-line {
+    display: block;
+    width: 1px;
+    height: 52px;
+    background: linear-gradient(to bottom, var(--color-primary), transparent);
+    animation: scroll-draw 2.2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-draw {
+    0%   { transform: scaleY(0); transform-origin: top;    opacity: 1;   }
+    49%  { transform: scaleY(1); transform-origin: top;    opacity: 1;   }
+    50%  { transform: scaleY(1); transform-origin: bottom; opacity: 1;   }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0.4; }
+  }
+
+  .scroll-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  /* ---------- Mobile (≤767px) ---------- */
+  @media (max-width: 767px) {
+    .hero-container {
+      padding-top: 90px;
+      padding-bottom: 72px;
+    }
+    .hero-name {
+      font-size: clamp(32px, 11vw, 72px);
+      letter-spacing: -0.03em;
+    }
+    .hero-roles {
+      font-size: clamp(13px, 4vw, 18px);
+    }
+    .hero-tagline {
+      font-size: 15px;
+    }
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .btn-hero-primary,
+    .btn-hero-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* Respect user reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .anim,
+    .hero-bg-mesh::before,
+    .hero-bg-mesh::after,
+    .badge-dot,
+    .role-cycle::after,
+    .scroll-line {
+      animation: none;
+    }
+    .anim {
+      opacity: 1;
+    }
+  }
+</style>

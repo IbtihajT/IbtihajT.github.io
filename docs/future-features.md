@@ -168,3 +168,62 @@ When picking any of these up:
 2. Read `CLAUDE.md` for the current project context (may have moved on since this file was written).
 3. Confirm with the owner the feature is still wanted before starting — priorities shift.
 4. Cross off completed items by deleting their section (or moving to `docs/completed-features.md` if a record is wanted).
+
+---
+
+# Design polish backlog
+> Captured during the Astro migration. Owner's priority is "ship the rebuild first" — these are deferred deliberately. Revisit after the live site is up.
+
+## D1. Hero typography iteration — `IDEA`
+**Context:** First-pass sizing for the giant name was set to `clamp(48px, 8vw, 120px)` (desktop) when we changed the displayed name from "Ibtihaj / Tahir" to "Muhammad Ibtihaj / Tahir" on 2026-05-11. The legacy was tuned for the shorter "Ibtihaj" line at `clamp(70px, 12vw, 170px)`. The new sizing is functional but may not feel as impactful — needs a design review across viewports (320px, 768px, 1024px, 1440px, 1920px).
+
+**Things to explore:**
+- Try `clamp()` lower bounds for ultra-narrow phones so "Muhammad Ibtihaj" doesn't wrap or look cramped
+- Alternative line splits: "Muhammad / Ibtihaj Tahir", "Muhammad / Ibtihaj / Tahir" (3 lines), or single line "Muhammad Ibtihaj Tahir"
+- Consider a smaller "Muhammad" above the main "Ibtihaj Tahir" lockup (kicker pattern)
+- Adjust `letter-spacing` and `line-height` together — current `-0.045em` / `0.86` was tuned for the larger sizes
+- Optical kerning between "I" and "b" in "Ibtihaj" (Outfit's default may be loose)
+
+## D2. Role rotation cadence / transition cue — `IDEA`
+**Context:** The hero's "— Data Scientist / AI Engineer / ML Engineer" role rotator uses a CSS-only `content:` animation on a 9s loop (3s per role, hard cut). Owner felt either the cadence is too slow, or there's no visual cue that the text is about to change.
+
+**Things to explore:**
+- Shorter cycle: 6s loop (2s per role) — see if it feels less stale
+- Add a cursor / caret blink before the cut (`::before { content: "▎"; animation: blink ...}`) to signal "typing-style" intent
+- Subtle fade-out/fade-in between roles instead of hard cut. Since `content:` is discrete, this would require either:
+  - JS-based rotation (small island, ~20 lines) so we can fade the wrapper element
+  - Two stacked spans with staggered opacity animations, each containing all three role strings on different keyframe offsets
+- Underline-grow animation under the role text as a "transition is coming" tell
+- A progress bar / dot indicator showing position in the cycle
+
+## D3. Cross-component hover polish pass — `IDEA`
+**Context:** After porting all sections, do a full hover review against the no-lift / centered-glow rule (see `memory/feedback_hover_design.md`). Some elements may need more glow spread, different brightness deltas, or animation timing tweaks to feel cohesive.
+
+## D4. Page-per-scroll navigation — `IDEA`
+**Owner's note (2026-05-11):** "I think the scrolling mechanism should be per page per scroll. We can explore this later."
+
+**Interpretation:** Each scroll-wheel tick / swipe should advance to the next section rather than scrolling continuously through pixels — Hero → About → Projects → Services → Stack → Contact. Section IDs already exist for anchors.
+
+**Things to explore:**
+- **CSS-only:** `scroll-snap-type: y mandatory` on `<html>` or `<main>` + `scroll-snap-align: start` on each section. Pros: zero JS, accessibility-friendly, respects scroll-behavior. Cons: feels closer to "sticky stop" than the dramatic "advance one screen per swipe" of Fullpage.js.
+- **JS library (`fullpage.js` / `@fullpage/react-fullpage`):** True one-section-per-scroll, dot pagination, keyboard nav. Pros: polished feel. Cons: extra JS (~70KB), licence cost for commercial use (free for open source/personal), accessibility caveats.
+- **Custom vanilla solution:** Listen for `wheel` events with a debounce/lock, animate `window.scrollTo()` to the next section's offsetTop. ~40 lines. Pros: full control, no dep. Cons: have to reimplement keyboard, touch, and accessibility manually.
+- **Hybrid:** CSS scroll-snap-stop with a small JS layer that adds the "one scroll = one section" lock.
+
+**Open decisions when starting:**
+- Should it apply to every viewport size, or only desktop? Mobile users typically expect free-scroll.
+- What happens on a section that's taller than the viewport (e.g. Projects bento grid on a small laptop screen)? Free-scroll within, snap between?
+- Keyboard nav: ↑/↓ keys, PgUp/PgDn, and # anchor links should all work.
+
+## D5. Section vertical fill — `IDEA`
+**Owner's note (2026-05-11):** "The desktop version is not utilizing the full section lenght and the content only covers like top 50% of the About section placeholder."
+
+**Context:** Current section padding is `110px 0` from the legacy. On wide desktops with short content (e.g., About's image + tagline + 7 tags), the section may only fill ~50% of viewport height, leaving a tall band of background below before the next section begins.
+
+**Things to explore:**
+- Add `min-height: 100vh` to sections so each fills at least one viewport (closely related to D4 page-per-scroll).
+- Add `min-height: min(100vh, 900px)` to avoid huge gaps on 4K monitors.
+- Use `align-items: center` on the section's inner grid so content vertically centers in the available space — currently it sits at the top because the section is just padded.
+- Reconsider section padding (`110px 0`) — could be `clamp(60px, 10vh, 140px)` for proportional spacing.
+- This decision will affect every section, so iterate on About first then propagate.
+
