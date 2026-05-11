@@ -8,6 +8,7 @@
 @theme {
   /* Brand */
   --color-primary:        #7c3aed;
+  --color-primary-light:  #c4b5fd;
   --color-primary-dim:    rgba(124, 58, 237, 0.12);
   --color-primary-border: rgba(124, 58, 237, 0.35);
   --color-primary-glow:   rgba(124, 58, 237, 0.25);
