@@ -87,7 +87,7 @@ const socials: Social[] = [
   /* ---------- Heading + sub ---------- */
   .contact-heading {
     font-family: var(--font-display);
-    font-size: clamp(38px, 5.5vw, 80px);
+    font-size: clamp(36px, 4.5vw, 62px);
     font-weight: 900;
     line-height: 1.02;
     letter-spacing: -0.04em;
@@ -184,7 +184,7 @@ const socials: Social[] = [
     color: var(--color-primary);
     background: var(--color-primary-dim);
     box-shadow:
-      0 0 0 1px rgba(124, 58, 237, 0.25),
+      0 0 0 1px var(--color-primary-glow),
       0 0 24px var(--color-primary-glow);
   }
 
@@ -196,7 +196,7 @@ const socials: Social[] = [
   /* ---------- Mobile (≤767px) ---------- */
   @media (max-width: 767px) {
     .contact-section { padding: 80px 0; }
-    .contact-heading { font-size: clamp(32px, 9vw, 56px); }
+    .contact-heading { font-size: clamp(30px, 8vw, 50px); }
     .contact-sub { margin-bottom: 36px; font-size: 15.5px; }
     .btn-contact-primary {
       padding: 16px 28px;

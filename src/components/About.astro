@@ -36,7 +36,7 @@ const stats = [
           <div class="about-image-glow" aria-hidden="true"></div>
           {stats.map((s, i) => (
             <div class={`about-stat-chip chip-${i + 1}`}>
-              <span class="chip-num">{s.num}</span>
+              <span class="chip-num text-gradient">{s.num}</span>
               <span class="chip-label">{s.label}</span>
             </div>
           ))}
@@ -165,10 +165,6 @@ const stats = [
     font-size: 30px;
     font-weight: 800;
     line-height: 1;
-    background: linear-gradient(135deg, #a78bfa, #22d3ee);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
   .chip-label {
@@ -183,7 +179,7 @@ const stats = [
   /* ---------- Text column ---------- */
   .about-heading {
     font-family: var(--font-display);
-    font-size: clamp(28px, 3.5vw, 50px);
+    font-size: clamp(36px, 4.5vw, 62px);
     font-weight: 800;
     line-height: 1.18;
     letter-spacing: -0.025em;
@@ -248,7 +244,7 @@ const stats = [
     }
 
     .about-heading {
-      font-size: clamp(26px, 7vw, 40px);
+      font-size: clamp(30px, 8vw, 50px);
     }
   }
 </style>
