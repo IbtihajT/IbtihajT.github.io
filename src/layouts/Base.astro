@@ -29,6 +29,12 @@ const {
 
     <link rel="icon" type="image/svg+xml" href="/images/MyStack/Logo.svg" />
 
+    <script is:inline>
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("js-reveal");
+      }
+    </script>
+
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -44,5 +50,23 @@ const {
   </head>
   <body>
     <slot />
+
+    <script>
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-in");
+                obs.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -10% 0px" }
+        );
+
+        document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>

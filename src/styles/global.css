@@ -98,3 +98,57 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ============================================================
+   SCROLL REVEAL VOCABULARY
+   Three variants — `rise`, `cascade`, `blur-rise`.
+   `.js-reveal` is added by an inline head script only when JS is
+   live AND reduced-motion is OFF. Gating the hidden state on it
+   means no FOUC if JS fails and no animation for reduced-motion.
+   ============================================================ */
+@keyframes reveal-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-blur-rise {
+  from { opacity: 0; transform: translateY(20px); filter: blur(8px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+.js-reveal [data-reveal="rise"],
+.js-reveal [data-reveal="blur-rise"] {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.js-reveal [data-reveal="rise"].is-in {
+  animation: reveal-rise 0.7s var(--ease-default) forwards;
+}
+
+.js-reveal [data-reveal="blur-rise"].is-in {
+  animation: reveal-blur-rise 0.9s var(--ease-default) forwards;
+}
+
+.js-reveal [data-reveal="cascade"] > * {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.js-reveal [data-reveal="cascade"].is-in > * {
+  animation: reveal-rise 0.7s var(--ease-default) forwards;
+  animation-delay: calc(var(--i, 0) * 0.08s);
+}
+
+.js-reveal [data-reveal="cascade"] > *:nth-child(1)  { --i: 0;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(2)  { --i: 1;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(3)  { --i: 2;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(4)  { --i: 3;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(5)  { --i: 4;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(6)  { --i: 5;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(7)  { --i: 6;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(8)  { --i: 7;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(9)  { --i: 8;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(10) { --i: 9;  }
+.js-reveal [data-reveal="cascade"] > *:nth-child(11) { --i: 10; }
+.js-reveal [data-reveal="cascade"] > *:nth-child(12) { --i: 11; }

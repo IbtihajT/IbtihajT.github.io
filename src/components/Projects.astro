@@ -57,7 +57,7 @@ const projects: Project[] = [
 <section id="projects" class="projects-section">
   <div class="projects-container">
 
-    <header class="section-header">
+    <header class="section-header" data-reveal="cascade">
       <SectionLabel text="02 / Projects" />
       <h2 class="section-heading">
         Selected <span class="text-gradient">Work</span>
@@ -67,7 +67,7 @@ const projects: Project[] = [
       </p>
     </header>
 
-    <ul class="bento-grid">
+    <ul class="bento-grid" data-reveal="cascade">
       {projects.map((p) => (
         <li class:list={["bento-card", p.featured && "bento-lg"]}>
           <div class="project-img-wrap">

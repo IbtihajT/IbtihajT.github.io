@@ -148,15 +148,12 @@ const socials = [
   }
 
   /* ---------- Entrance animation (page-load stagger) ---------- */
+  /* Uses the global `reveal-rise` keyframe so the Hero shares one
+     source of truth with the scroll-reveal system. */
   .anim {
     opacity: 0;
-    animation: rise-in 0.7s var(--ease-default) forwards;
+    animation: reveal-rise 0.7s var(--ease-default) forwards;
     animation-delay: var(--anim-delay, 0s);
-  }
-
-  @keyframes rise-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
   }
 
   /* ---------- Availability badge ---------- */

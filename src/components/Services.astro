@@ -52,7 +52,7 @@ const services: Service[] = [
 <section id="services" class="services-section">
   <div class="services-container">
 
-    <header class="section-header">
+    <header class="section-header" data-reveal="cascade">
       <SectionLabel text="03 / Services" />
       <h2 class="section-heading">
         What I <span class="text-gradient">Offer</span>
@@ -62,7 +62,7 @@ const services: Service[] = [
       </p>
     </header>
 
-    <ul class="services-grid">
+    <ul class="services-grid" data-reveal="cascade">
       {services.map((s) => (
         <li class:list={["service-glass", s.featured && "featured"]}>
           <div class="service-icon-wrap">

@@ -28,7 +28,7 @@ const groups: Group[] = [
 <section id="stack" class="stack-section">
   <div class="stack-container">
 
-    <header class="section-header">
+    <header class="section-header" data-reveal="cascade">
       <SectionLabel text="04 / Stack" />
       <h2 class="section-heading">
         My <span class="text-gradient">Tech Stack</span>
@@ -40,8 +40,8 @@ const groups: Group[] = [
 
     {groups.map((g) => (
       <div class="stack-group">
-        <div class="stack-category-label">{g.label}</div>
-        <ul class="stack-row">
+        <div class="stack-category-label" data-reveal="rise">{g.label}</div>
+        <ul class="stack-row" data-reveal="cascade">
           {g.chips.map((c) => (
             <li class="stack-chip">
               <img
