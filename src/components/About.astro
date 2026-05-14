@@ -12,20 +12,18 @@ const skills = [
 ];
 
 const stats = [
-  { num: "4+",  label: "Years Experience" },
-  { num: "10+", label: "ML Projects"      },
+  { num: "4+", label: "Years Experience" },
+  { num: "10+", label: "ML Projects" },
 ];
 ---
 
 <section id="about" class="about-section">
   <div class="about-container">
-
     <div class="about-grid">
-
       <div class="about-image-col">
         <div class="about-image-wrap" data-reveal="blur-rise">
           <img
-            src="/images/MyStack/Dp.webp"
+            src="/images/MyStack/Me.jpg"
             alt="Muhammad Ibtihaj Tahir"
             class="about-img"
             loading="lazy"
@@ -34,12 +32,14 @@ const stats = [
             height="575"
           />
           <div class="about-image-glow" aria-hidden="true"></div>
-          {stats.map((s, i) => (
-            <div class={`about-stat-chip chip-${i + 1}`}>
-              <span class="chip-num text-gradient">{s.num}</span>
-              <span class="chip-label">{s.label}</span>
-            </div>
-          ))}
+          {
+            stats.map((s, i) => (
+              <div class={`about-stat-chip chip-${i + 1}`}>
+                <span class="chip-num text-gradient">{s.num}</span>
+                <span class="chip-label">{s.label}</span>
+              </div>
+            ))
+          }
         </div>
       </div>
 
@@ -54,8 +54,8 @@ const stats = [
         <p class="about-body">
           As an <strong>AI and Machine Learning Specialist</strong>, I deliver
           end-to-end data-driven solutions — from raw data pipelines to
-          production-ready models. I design scalable ML architectures
-          supporting reliable training, validation, and deployment workflows.
+          production-ready models. I design scalable ML architectures supporting
+          reliable training, validation, and deployment workflows.
         </p>
 
         <p class="about-body">
@@ -70,7 +70,6 @@ const stats = [
           {skills.map((s) => <li class="a-tag">{s}</li>)}
         </ul>
       </div>
-
     </div>
   </div>
 </section>
@@ -88,7 +87,9 @@ const stats = [
     padding: 0 1.5rem;
   }
   @media (min-width: 1024px) {
-    .about-container { padding: 0 2.5rem; }
+    .about-container {
+      padding: 0 2.5rem;
+    }
   }
 
   .about-grid {
@@ -130,7 +131,11 @@ const stats = [
     position: absolute;
     inset: -2px;
     border-radius: var(--radius-2xl);
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(34, 211, 238, 0.2));
+    background: linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.35),
+      rgba(34, 211, 238, 0.2)
+    );
     z-index: -1;
     filter: blur(24px);
     opacity: 0.5;
@@ -157,8 +162,14 @@ const stats = [
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
-  .chip-1 { bottom: 32px; left: -28px; }
-  .chip-2 { top: 32px;    right: -28px; }
+  .chip-1 {
+    bottom: 32px;
+    left: -28px;
+  }
+  .chip-2 {
+    top: 32px;
+    right: -28px;
+  }
 
   .chip-num {
     font-family: var(--font-display);
@@ -232,7 +243,9 @@ const stats = [
 
   /* ---------- Mobile (≤767px) ---------- */
   @media (max-width: 767px) {
-    .about-section { padding: 80px 0; }
+    .about-section {
+      padding: 80px 0;
+    }
 
     .about-image-wrap {
       max-width: 100%;
