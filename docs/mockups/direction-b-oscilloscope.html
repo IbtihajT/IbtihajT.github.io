@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muhammad Ibtihaj Tahir — Oscilloscope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0A0E0C;
+    --panel:#11150F;
+    --bone:#E6E1D6;
+    --dim:#8A9285;
+    --green:#6FCF73;
+    --amber:#E8A33D;
+    --grid:rgba(111,207,115,0.08);
+    --hair:rgba(111,207,115,0.18);
+    --sans:"Space Grotesk",system-ui,sans-serif;
+    --mono:"Space Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:28px 28px;
+    color:var(--bone);
+    font-family:var(--sans);
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--green);text-decoration:none}
+  a:hover{color:var(--bone)}
+  :focus-visible{outline:2px solid var(--green);outline-offset:3px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 28px}
+  .mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--dim);text-transform:uppercase}
+  .live{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;color:var(--dim)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 6px var(--amber);display:inline-block;animation:blink 1.6s steps(2) infinite}
+  @keyframes blink{50%{opacity:.25}}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(10,14,12,0.9);border-bottom:1px solid var(--hair)}
+  .navrow{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brand{font-family:var(--mono);font-weight:700;font-size:.82rem;letter-spacing:.06em;color:var(--bone)}
+  .brand b{color:var(--green)}
+  .navlinks{display:flex;gap:24px}
+  .navlinks a{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--dim)}
+  .navlinks a:hover{color:var(--green)}
+  .menutoggle{display:none;background:none;border:1px solid var(--hair);color:var(--bone);font-family:var(--mono);font-size:.7rem;text-transform:uppercase;padding:6px 10px;cursor:pointer}
+
+  /* HERO */
+  header.hero{position:relative;padding:0;border-bottom:1px solid var(--hair)}
+  .scopebox{position:relative;min-height:420px;overflow:hidden}
+  #scope{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .scopeoverlay{position:relative;z-index:2;padding:54px 0 60px;pointer-events:none}
+  .scopeoverlay .wrap > *{pointer-events:auto}
+  .readtop{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+  .hero h1{font-family:var(--sans);font-weight:700;font-size:clamp(2.1rem,6.4vw,4.4rem);line-height:1.02;letter-spacing:-.02em;text-shadow:0 0 18px rgba(111,207,115,0.12)}
+  .hero .tag{font-family:var(--sans);font-weight:400;font-size:clamp(1rem,2.4vw,1.35rem);color:var(--bone);max-width:36ch;margin:16px 0 22px}
+  .roles{display:flex;flex-wrap:wrap;gap:0}
+  .roles span{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;color:var(--green);border:1px solid var(--hair);border-right:0;padding:6px 12px}
+  .roles span:last-child{border-right:1px solid var(--hair)}
+  .ctas{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+  .btn{font-family:var(--mono);font-weight:700;font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;padding:11px 18px;border:1px solid var(--green);color:var(--green);background:transparent}
+  .btn:hover{background:var(--green);color:var(--bg)}
+  .btn.ghost{border-color:var(--hair);color:var(--bone)}
+  .btn.ghost:hover{border-color:var(--bone);background:transparent;color:var(--green)}
+
+  /* SECTION */
+  section{padding:54px 0;border-bottom:1px solid var(--hair)}
+  .seclabel{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--hair);padding-bottom:12px;margin-bottom:30px}
+  .seclabel h2{font-family:var(--sans);font-weight:500;font-size:clamp(1.4rem,3vw,2rem)}
+  .seclabel .coord{font-family:var(--mono);font-size:.72rem;color:var(--green);text-transform:uppercase}
+
+  /* ABOUT */
+  .about{display:grid;grid-template-columns:260px 1fr;gap:40px;align-items:start}
+  .portrait{border:1px solid var(--hair);background:var(--panel);padding:8px;position:relative}
+  .portrait img{display:block;width:100%;height:auto;filter:grayscale(.5) brightness(.92) contrast(1.05);mix-blend-mode:luminosity}
+  .portrait .cap{margin-top:8px;display:flex;justify-content:space-between}
+  .portrait::after{content:"";position:absolute;inset:8px;background:linear-gradient(rgba(111,207,115,0.04) 1px,transparent 1px);background-size:100% 4px;pointer-events:none}
+  .about p{margin-bottom:16px;max-width:60ch;color:var(--bone)}
+  .stats{display:flex;gap:28px;margin:22px 0;flex-wrap:wrap}
+  .stat .num{font-family:var(--mono);font-weight:700;font-size:1.9rem;color:var(--green);line-height:1}
+  .stat .lbl{margin-top:5px}
+  .skillchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .skillchips span{font-family:var(--mono);font-size:.7rem;border:1px solid var(--hair);padding:4px 9px;color:var(--dim);text-transform:uppercase}
+
+  /* PROJECTS - channels */
+  .channels{display:flex;flex-direction:column;gap:18px}
+  .channel{display:grid;grid-template-columns:200px 1fr;gap:0;border:1px solid var(--hair);background:var(--panel)}
+  .channel .scr{border-right:1px solid var(--hair);position:relative;background:var(--bg)}
+  .channel .scr .chlabel{position:absolute;top:8px;left:10px;z-index:2}
+  .channel canvas{display:block;width:100%;height:100%;min-height:160px}
+  .channel .info{padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+  .channel h3{font-family:var(--sans);font-weight:500;font-size:1.12rem;line-height:1.2}
+  .channel p{font-size:.88rem;color:var(--dim);line-height:1.5}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tags span{font-family:var(--mono);font-size:.64rem;text-transform:uppercase;border:1px solid var(--hair);padding:3px 7px;color:var(--green)}
+  .readout{font-family:var(--mono);font-size:.72rem;color:var(--bone);border-top:1px dashed var(--hair);padding-top:9px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:auto}
+  .readout .ph{color:var(--amber)}
+  .channel .more{font-family:var(--mono);font-weight:700;font-size:.72rem;text-transform:uppercase}
+
+  /* SERVICES */
+  .svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .svc{border:1px solid var(--hair);background:var(--panel);padding:20px}
+  .svc .no{font-family:var(--mono);font-size:.7rem;color:var(--green);text-transform:uppercase;margin-bottom:10px}
+  .svc h3{font-family:var(--sans);font-weight:500;font-size:1.1rem;margin-bottom:8px}
+  .svc p{font-size:.86rem;color:var(--dim);margin-bottom:12px}
+  .svc ul{list-style:none}
+  .svc li{font-family:var(--mono);font-size:.72rem;color:var(--bone);padding-left:16px;position:relative;margin-bottom:6px}
+  .svc li::before{content:"▸";position:absolute;left:0;color:var(--green)}
+
+  /* STACK */
+  .stackgroup{margin-bottom:26px}
+  .stackgroup .gtitle{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+  .logos{display:flex;flex-wrap:wrap;gap:12px}
+  .logos .chip{display:flex;align-items:center;gap:9px;border:1px solid var(--hair);background:var(--panel);padding:9px 14px}
+  .logos img{width:22px;height:22px;object-fit:contain}
+  .logos .chip span{font-family:var(--mono);font-size:.74rem;color:var(--bone)}
+
+  /* CONTACT */
+  .contact{border:1px solid var(--hair);background:var(--panel);padding:40px}
+  .contact h2{font-family:var(--sans);font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);margin:10px 0 12px;max-width:18ch}
+  .contact p{color:var(--dim);max-width:50ch;margin-bottom:22px}
+  .contactlinks{display:flex;gap:12px;flex-wrap:wrap}
+
+  /* FOOTER */
+  footer{padding:24px 0 38px}
+  .footrow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media(max-width:820px){
+    .about{grid-template-columns:1fr}
+    .portrait{max-width:280px}
+    .channel{grid-template-columns:1fr}
+    .channel .scr{border-right:0;border-bottom:1px solid var(--hair)}
+    .svcs{grid-template-columns:1fr}
+    .navlinks{display:none}
+    .navlinks.open{display:flex;position:absolute;top:58px;left:0;right:0;flex-direction:column;background:var(--bg);border-bottom:1px solid var(--hair);padding:14px 28px;gap:14px}
+    .menutoggle{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.dot{opacity:1}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <div class="brand">M.I.TAHIR <b>::</b> CH1</div>
+    <button class="menutoggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+    <div class="navlinks" id="navlinks">
+      <a href="#about">About</a>
+      <a href="#projects">Channels</a>
+      <a href="#services">Services</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="scopebox">
+    <canvas id="scope" aria-label="Animated oscilloscope waveform trace"></canvas>
+    <div class="scopeoverlay">
+      <div class="wrap">
+        <div class="readtop">
+          <span class="live"><span class="dot"></span>STATUS: AVAILABLE</span>
+          <span class="mono">CH1 · 2.00 V/div · 5 ms/div · TRIG ▲</span>
+        </div>
+        <h1>Muhammad<br>Ibtihaj Tahir</h1>
+        <p class="tag">Building intelligent systems that turn raw data into decisions that matter.</p>
+        <div class="roles">
+          <span>Machine Learning Engineer</span>
+          <span>Data Scientist</span>
+          <span>AI Engineer</span>
+        </div>
+        <div class="ctas">
+          <a class="btn" href="#projects">View Channels</a>
+          <a class="btn ghost" href="#contact">Open Comms</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="seclabel">
+      <h2>About</h2>
+      <span class="coord">SIG ID: M.I.T · UPTIME 4+ YRS</span>
+    </div>
+    <div class="about">
+      <div class="portrait">
+        <img src="../../public/images/MyStack/Me.jpg" alt="Portrait of Muhammad Ibtihaj Tahir" loading="lazy" />
+        <div class="cap"><span class="mono">OPERATOR</span><span class="mono">CH1</span></div>
+      </div>
+      <div>
+        <p>AI &amp; Machine Learning Specialist delivering end-to-end, data-driven solutions — from raw data pipelines to production-ready models.</p>
+        <p>I design scalable ML architectures for reliable training, validation, and deployment, then bridge research and production through MLOps: automated deployment, monitoring, and retraining.</p>
+        <div class="stats">
+          <div class="stat"><div class="num">4+</div><div class="lbl mono">Years experience</div></div>
+          <div class="stat"><div class="num">10+</div><div class="lbl mono">ML projects shipped</div></div>
+        </div>
+        <div class="skillchips">
+          <span>End-to-End ML</span><span>MLOps</span><span>Deep Learning</span><span>Computer Vision</span><span>NLP</span><span>Data Pipelines</span><span>Model Evaluation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="seclabel">
+      <h2>Channels</h2>
+      <span class="coord">SWEEP: 3 SIGNALS CAPTURED</span>
+    </div>
+    <div class="channels">
+
+      <article class="channel">
+        <div class="scr">
+          <span class="chlabel mono" style="color:var(--green)">CH·A · AUDIO</span>
+          <canvas data-trace="audio"></canvas>
+        </div>
+        <div class="info">
+          <h3>Singing Emotion Prediction Using Machine Learning</h3>
+          <p>End-to-end ML pipeline classifying emotional states from vocal performance via audio feature extraction, signal processing, ensemble classifiers, and cross-validated evaluation.</p>
+          <div class="tags"><span>Machine Learning</span><span>Audio Processing</span><span>Python</span></div>
+          <div class="readout"><span>CV F1: <span class="ph">⟨add⟩</span></span><span>METHOD: ENSEMBLE + K-FOLD</span></div>
+          <a class="more" href="https://www.linkedin.com/in/muhammad-ibtihaj-tahir" target="_blank" rel="noopener">View Project (LinkedIn) →</a>
+        </div>
+      </article>
+
+      <article class="channel">
+        <div class="scr">
+          <span class="chlabel mono" style="color:var(--green)">CH·B · VISION</span>
+          <canvas data-trace="cnn"></canvas>
+        </div>
+        <div class="info">
+          <h3>Visualization-Based Malware Analysis via CNN</h3>
+          <p>CNNs applied to binary visualizations of malware samples, classifying across malware families directly from image-encoded executables.</p>
+          <div class="tags"><span>CNN</span><span>Computer Vision</span><span>Security</span></div>
+          <div class="readout"><span>ACC: <span class="ph">⟨add⟩</span></span><span>INPUT: BINARY → IMAGE</span></div>
+          <a class="more" href="https://github.com/IbtihajT" target="_blank" rel="noopener">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="channel">
+        <div class="scr">
+          <span class="chlabel mono" style="color:var(--green)">CH·C · LATENT</span>
+          <canvas data-trace="latent"></canvas>
+        </div>
+        <div class="info">
+          <h3>MNIST Dataset Visualization &amp; Analysis</h3>
+          <p>Visualization study of feature distributions, latent-space representations, and model-interpretation techniques on MNIST.</p>
+          <div class="tags"><span>Deep Learning</span><span>Visualization</span><span>TensorFlow</span></div>
+          <div class="readout"><span>SEP: <span class="ph">⟨add⟩</span></span><span>EMBED: 2-D PROJ · 0–9</span></div>
+          <a class="more" href="https://www.linkedin.com/in/muhammad-ibtihaj-tahir" target="_blank" rel="noopener">View Project (LinkedIn) →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="seclabel">
+      <h2>Services</h2>
+      <span class="coord">PIPELINE · 3 STAGES</span>
+    </div>
+    <div class="svcs">
+      <div class="svc">
+        <div class="no">STAGE 01 · INGEST</div>
+        <h3>Data Engineering</h3>
+        <p>Robust pipelines, ETL, and analytics infrastructure.</p>
+        <ul><li>Data pipeline design</li><li>Feature engineering</li><li>Data quality &amp; validation</li></ul>
+      </div>
+      <div class="svc">
+        <div class="no">STAGE 02 · MODEL</div>
+        <h3>ML / AI Development</h3>
+        <p>Design, train, and deploy ML &amp; DL models end-to-end.</p>
+        <ul><li>Model architecture design</li><li>Training &amp; fine-tuning</li><li>Evaluation &amp; model selection</li></ul>
+      </div>
+      <div class="svc">
+        <div class="no">STAGE 03 · SERVE</div>
+        <h3>MLOps &amp; Deployment</h3>
+        <p>Automated deployment, monitoring, retraining, maintenance.</p>
+        <ul><li>CI/CD for ML pipelines</li><li>Model monitoring &amp; alerts</li><li>Production inference APIs</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="seclabel">
+      <h2>Instrumentation</h2>
+      <span class="coord">STACK · 2 BANKS</span>
+    </div>
+    <div class="stackgroup">
+      <div class="gtitle">Core Languages &amp; Data</div>
+      <div class="logos">
+        <div class="chip"><img src="../../public/images/MyStack/python.svg" alt=""><span>Python</span></div>
+        <div class="chip"><img src="../../public/images/MyStack/bash.svg" alt=""><span>Bash</span></div>
+        <div class="chip"><img src="../../public/images/MyStack/PostgresSQL.svg" alt=""><span>PostgreSQL</span></div>
+        <div class="chip"><img src="../../public/images/MyStack/Pandas.svg" alt=""><span>Pandas</span></div>
+      </div>
+    </div>
+    <div class="stackgroup">
+      <div class="gtitle">ML &amp; Deep Learning Frameworks</div>
+      <div class="logos">
+        <div class="chip"><img src="../../public/images/MyStack/PyTorch.svg" alt=""><span>PyTorch</span></div>
+        <div class="chip"><img src="../../public/images/MyStack/TensorFlow.svg" alt=""><span>TensorFlow</span></div>
+        <div class="chip"><img src="../../public/images/MyStack/scikit-learn.svg" alt=""><span>scikit-learn</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:0">
+  <div class="wrap">
+    <div class="contact">
+      <span class="live"><span class="dot"></span>COMMS: OPEN</span>
+      <h2>Let's Build Something Intelligent Together</h2>
+      <p>Open to freelance, consulting, and full-time work. Send a signal — let's turn your data into decisions.</p>
+      <div class="contactlinks">
+        <a class="btn" href="mailto:ibtihajtahir01@gmail.com">ibtihajtahir01@gmail.com</a>
+        <a class="btn ghost" href="https://github.com/IbtihajT" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/muhammad-ibtihaj-tahir" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footrow">
+    <span class="mono">© 2026 M.I.TAHIR · OSCILLOSCOPE</span>
+    <span class="mono">FILE: direction-b · mockup</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dpr = Math.min(window.devicePixelRatio||1, 2);
+
+  /* ---- HERO SCOPE ---- */
+  var c=document.getElementById('scope');
+  if(c){
+    var ctx=c.getContext('2d'),W,H;
+    function size(){
+      var r=c.getBoundingClientRect();
+      W=r.width;H=r.height;
+      c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    size();window.addEventListener('resize',size);
+    function draw(t){
+      ctx.clearRect(0,0,W,H);
+      // grid
+      ctx.strokeStyle='rgba(111,207,115,0.10)';ctx.lineWidth=1;
+      for(var x=0;x<W;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+      for(var y=0;y<H;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+      // center axes brighter
+      ctx.strokeStyle='rgba(111,207,115,0.18)';
+      ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+      // trace with phosphor glow
+      var mid=H*0.62;
+      ctx.save();
+      ctx.shadowColor='rgba(111,207,115,0.9)';ctx.shadowBlur=10;
+      ctx.strokeStyle='#6FCF73';ctx.lineWidth=2;
+      ctx.beginPath();
+      for(var i=0;i<=W;i+=2){
+        var ph=i*0.014;
+        var v=Math.sin(ph + t*0.0014)*52
+              + Math.sin(ph*2.3 + t*0.0009)*20
+              + Math.sin(ph*0.5 - t*0.0006)*14;
+        var yy=mid + v*0.5;
+        i===0?ctx.moveTo(i,yy):ctx.lineTo(i,yy);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+    if(reduce){draw(0);}
+    else{var s=performance.now();(function loop(now){draw(now-s);requestAnimationFrame(loop);})(s);}
+  }
+
+  /* ---- CHANNEL TRACES ---- */
+  function setupTrace(cv){
+    var g=cv.getContext('2d'),kind=cv.getAttribute('data-trace'),W,H;
+    function size(){var r=cv.getBoundingClientRect();W=r.width||200;H=r.height||160;cv.width=W*dpr;cv.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);}
+    size();window.addEventListener('resize',size);
+    function frame(t){
+      g.clearRect(0,0,W,H);
+      g.strokeStyle='rgba(111,207,115,0.10)';g.lineWidth=1;
+      for(var x=0;x<W;x+=20){g.beginPath();g.moveTo(x,0);g.lineTo(x,H);g.stroke();}
+      for(var y=0;y<H;y+=20){g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke();}
+      g.save();g.shadowColor='rgba(111,207,115,0.8)';g.shadowBlur=7;
+      g.strokeStyle='#6FCF73';g.fillStyle='#6FCF73';g.lineWidth=1.6;
+      if(kind==='audio'){
+        g.beginPath();
+        for(var i=0;i<=W;i+=2){
+          var v=Math.sin(i*0.06+t*0.002)*Math.sin(i*0.015)*0.8+Math.sin(i*0.2+t*0.003)*0.2;
+          var yy=H/2+v*(H*0.32);i===0?g.moveTo(i,yy):g.lineTo(i,yy);
+        }
+        g.stroke();
+      } else if(kind==='cnn'){
+        // square pulse / digital
+        g.beginPath();var lvl=0;
+        for(var j=0;j<=W;j+=2){
+          if(j% (24) <2) lvl = (Math.sin(j*0.1+t*0.002)>0)?1:0;
+          var y2=H/2 - (lvl?1:-1)*(H*0.22);
+          j===0?g.moveTo(j,y2):g.lineTo(j,y2);
+        }
+        g.stroke();
+      } else if(kind==='latent'){
+        g.shadowBlur=5;
+        var cl=[[W*0.3,H*0.4],[W*0.55,H*0.62],[W*0.72,H*0.36]];
+        cl.forEach(function(p,idx){
+          for(var n=0;n<22;n++){
+            var ang=n+idx+t*0.0005,rad=(n%6)*3+4;
+            g.beginPath();g.globalAlpha=0.7;
+            g.arc(p[0]+Math.cos(ang)*rad,p[1]+Math.sin(ang)*rad,1.5,0,6.28);g.fill();
+          }
+        });
+        g.globalAlpha=1;
+      }
+      g.restore();
+    }
+    if(reduce){frame(0);}
+    else{var st=performance.now();(function loop(now){frame(now-st);requestAnimationFrame(loop);})(st);}
+  }
+  document.querySelectorAll('canvas[data-trace]').forEach(setupTrace);
+
+  /* ---- MOBILE MENU ---- */
+  var tog=document.querySelector('.menutoggle'),links=document.getElementById('navlinks');
+  if(tog){tog.addEventListener('click',function(){
+    var open=links.classList.toggle('open');tog.setAttribute('aria-expanded',open);
+  });
+  links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');tog.setAttribute('aria-expanded','false');});});}
+})();
+</script>
+</body>
+</html>

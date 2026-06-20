@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio Direction Mockups — M. Ibtihaj Tahir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#0c0f0d;--panel:#14181400;--bone:#E6E1D6;--dim:#8A9285;--green:#6FCF73;--amber:#E8A33D;--blue:#2E6F95}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0c0f0d;color:var(--bone);font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.6;min-height:100vh;
+       background-image:linear-gradient(rgba(111,207,115,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(111,207,115,0.05) 1px,transparent 1px);background-size:28px 28px}
+  a{text-decoration:none;color:inherit}
+  :focus-visible{outline:2px solid var(--green);outline-offset:3px}
+  .wrap{max-width:900px;margin:0 auto;padding:64px 28px}
+  .mono{font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+  header{margin-bottom:48px}
+  h1{font-weight:700;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.02em;margin:10px 0 8px}
+  header p{color:var(--dim);max-width:60ch}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .card{border:1px solid rgba(111,207,115,0.2);padding:26px;background:rgba(255,255,255,0.015);display:flex;flex-direction:column;gap:12px;transition:border-color .2s,transform .2s}
+  .card:hover{border-color:var(--green);transform:translateY(-3px)}
+  .card .tagrow{display:flex;justify-content:space-between;align-items:center}
+  .swatches{display:flex;gap:6px}
+  .sw{width:16px;height:16px;border:1px solid rgba(255,255,255,0.2)}
+  .card h2{font-weight:500;font-size:1.3rem}
+  .card .lede{color:var(--dim);font-size:.92rem;flex:1}
+  .card .go{font-family:"Space Mono",monospace;font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--green);border:1px solid var(--green);padding:9px 14px;align-self:flex-start;margin-top:6px}
+  .card:hover .go{background:var(--green);color:#0c0f0d}
+  footer{margin-top:48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="mono">Throwaway exploration · compare the feel · 2026-06-20</span>
+    <h1>Portfolio Direction Mockups</h1>
+    <p>Two self-contained homepage explorations for Muhammad Ibtihaj Tahir — Machine Learning Engineer. Open each, scroll the full page, and compare the overall feel. These are not the real site.</p>
+  </header>
+
+  <div class="cards">
+    <a class="card" href="direction-a-spectral-lab.html">
+      <div class="tagrow">
+        <span class="mono">Direction A</span>
+        <div class="swatches">
+          <span class="sw" style="background:#F2F0E9"></span>
+          <span class="sw" style="background:#1A1A1A"></span>
+          <span class="sw" style="background:#E8A33D"></span>
+          <span class="sw" style="background:#2E6F95"></span>
+        </div>
+      </div>
+      <h2>Spectral Lab</h2>
+      <p class="lede">A light, scientific audio-analysis workbench. Cool lab paper, Spectral serif + IBM Plex, hairline rules, and a generated spectrogram hero. Projects read like figures in a lab notebook.</p>
+      <span class="go">Open Direction A →</span>
+    </a>
+
+    <a class="card" href="direction-b-oscilloscope.html">
+      <div class="tagrow">
+        <span class="mono">Direction B</span>
+        <div class="swatches">
+          <span class="sw" style="background:#0A0E0C"></span>
+          <span class="sw" style="background:#E6E1D6"></span>
+          <span class="sw" style="background:#6FCF73"></span>
+          <span class="sw" style="background:#E8A33D"></span>
+        </div>
+      </div>
+      <h2>Oscilloscope</h2>
+      <p class="lede">A calm, dark signal-instrument readout. Warm-green-black scope, phosphor green trace, Space Grotesk + Space Mono. A live oscilloscope hero; projects presented as instrument channels.</p>
+      <span class="go">Open Direction B →</span>
+    </a>
+  </div>
+
+  <footer>
+    <span class="mono">Token systems recorded in NOTES.md</span>
+    <span class="mono">No build step · open via file://</span>
+  </footer>
+</div>
+</body>
+</html>
