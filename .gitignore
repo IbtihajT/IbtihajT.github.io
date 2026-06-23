@@ -24,6 +24,7 @@ pnpm-debug.log*
 # OS / Editor
 .DS_Store
 .idea/
+.vscode
 
 # CV — deferred, see docs/future-features.md #3/#4
 /Muhammad Ibtihaj Tahir.pdf
