@@ -61,16 +61,14 @@ Add honeypot field for spam: `<input name="_gotcha" style="display:none" />`. Mo
 
 **Why deferred:** Tied to #4 — owner wants the PDF to auto-update from a LaTeX source repo rather than be manually re-uploaded.
 
-**Quick-and-dirty version (until #4 is built):**
-- Drop the current PDF at `public/cv.pdf`.
-- Add a "Download CV" button in Hero or About section pointing to `/cv.pdf`.
-- Update manually when CV changes.
-
-**Skip this and go straight to #4** if owner is ready to set up the cross-repo pipeline.
+**Now unblocked:** #4 is built, so the PDF is already published at `public/Muhammad-Ibtihaj-Tahir-CV.pdf`. Only the button remains:
+- Add a "Download CV" button in Hero or About section pointing to `/Muhammad-Ibtihaj-Tahir-CV.pdf`.
 
 ---
 
-## 4. Auto-updating CV via LaTeX source repo — `IDEA` (owner's idea, worth designing)
+## 4. Auto-updating CV via LaTeX source repo — `DONE` (Option B, 2026-11-04)
+
+**Implemented:** `.github/workflows/build-cv.yml` in `IbtihajT/Muhammad-Ibtihaj-Tahir-CV` compiles the CV with XeLaTeX on every push to `master` and commits it to `public/Muhammad-Ibtihaj-Tahir-CV.pdf` here, using the `SITE_DEPLOY_TOKEN` secret. Live at `https://ibtihajt.github.io/Muhammad-Ibtihaj-Tahir-CV.pdf`. The options below are kept as the original design record.
 
 **Owner's idea (verbatim):** "I maintain and update my CV in LaTeX that is available on Github as a repository. I wonder if there would be a way to recompile the CV for everytime someone downloads my CV from my Portfolio Website. This ensures that I don't have to keep uploading my CV everytime I make changes to it."
 
